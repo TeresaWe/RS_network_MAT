@@ -35,7 +35,7 @@ try:
 2. (if 1. eeglab): eeglab_fieldtrip_loop.m
 3. rb_EEG_Conn2.m (if error, try rb_EEG_Conn.m)
 4. rb_EEG_Network2.m (makes use of rb_maeSymmetric.m)
-5. export: networkparameters2csv2.m, matrices2csv.m (binary), matrices2csv2.m (raw matrices)
+5. export: networkparameters2csv2.m, matrices2csv.m (binary), matrices2csv2.m (raw matrices) --> statistics in R (https://github.com/TeresaWe/EEG_RS_Statistics)
 6. permutation_stats_Matrices an permutation_statsZMatrices calculate single connection differences across groups (subjects raw matrices vs. z-standardised matrices). Makes use of FDR.m and permutation_2tailed
 7. Take any averaged, single subject or FDR difference Matrix and plot as graphs via igraph (R) or with electrode positions using BrainNetViewer (writeNodes.m, to convert data into .node & .edge files for BrainNetViewer; this needs writefiles_BrainNet.m). 
 
