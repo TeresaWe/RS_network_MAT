@@ -1,0 +1,79 @@
+%permutation statistics on raw matrices by group
+%BETA
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+cd('G:\EEG RS Preprocessing')
+%load group membership data (AP vs.RP)
+groups=readtable('EEG_order_groups.csv')
+%raw matrices are (seperate for EO and EC) within folder "done",choose folder of frequency band
+cd('G:\EEG RS Preprocessing\zRS_EO_all_rejected_fieldtrip\done\networks_beta') 
+
+%load 'Net2_Results.mat' --> Results{1,subject}.ConnMat (Connectivity
+%Matrices
+load('Net2_Results.mat', 'Results')
+
+%creat matrix1 (AP) and matrix2 (RP) nsub*28*28
+AP=[]
+nAP=1
+RP=[]
+nRP=1
+for i=1:size(groups,1)
+    if (groups.group(i)==1)&&(groups.exclude_1el(i)~=1)
+        AP(:,:,nAP)=Results{1,i}.ConnMat;
+        nAP=nAP+1
+    elseif (groups.group(i)==0) && (groups.exclude_1el(i)~=1)
+        RP(:,:,nRP)=Results{1,i}.ConnMat;
+        nRP=nRP+1
+    end
+    i=i+1
+end
+
+%rb_compareMatrices.m (needs permutation_2tailed.m,FDR.m)
+
+[outP outFDR p_fdr outD]=rb_compareMatrices2(AP, RP, 10000) %the higher the n of 
+%permutations, the better the symmetry of matrices
+
+csvwrite('outP_beta.csv',outP)
+csvwrite('FDR_beta.csv',outFDR)
+csvwrite('p_fdr_beta.csv',p_fdr)
+csvwrite('outD_beta.csv',outD)
+
+
+%DELTA
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+cd('G:\EEG RS Preprocessing')
+%load group membership data (AP vs.RP)
+groups=readtable('EEG_order_groups.csv')
+%raw matrices are (seperate for EO and EC) within folder "done",choose folder of frequency band
+cd('G:\EEG RS Preprocessing\zRS_EC_all_rejected_fieldtrip\done\networks_delta') 
+
+%load 'Net2_Results.mat' --> Results{1,subject}.ConnMat (Connectivity
+%Matrices
+load('Net2_Results.mat', 'Results')
+
+%creat matrix1 (AP) and matrix2 (RP) nsub*28*28
+AP=[]
+nAP=1
+RP=[]
+nRP=1
+for i=1:size(groups,1)
+    if (groups.group(i)==1)&&(groups.exclude_1el(i)~=1)
+        AP(:,:,nAP)=Results{1,i}.ConnMat;
+        nAP=nAP+1
+    elseif (groups.group(i)==0) && (groups.exclude_1el(i)~=1)
+        RP(:,:,nRP)=Results{1,i}.ConnMat;
+        nRP=nRP+1
+    end
+    i=i+1
+end
+
+%rb_compareMatrices.m (needs permutation_2tailed.m,FDR.m)
+
+[outP outFDR p_fdr outD]=rb_compareMatrices2(AP, RP, 10000) %the higher the n of 
+%permutations, the better the symmetry of matrices
+csvwrite('outP_delta.csv',outP)
+csvwrite('FDR_delta.csv',outFDR)
+csvwrite('p_fdr_delta.csv',p_fdr)
+csvwrite('outD_delta.csv',outD)
+
+
+
